@@ -207,7 +207,7 @@ def indexesFromSentence(lang, sentence):
 def tensorFromSentence(lang, sentence):
     indexes = indexesFromSentence(lang, sentence)
     indexes.append(EOS_token)
-    return torch.LongTensor(indexes, device=device).view(-1, 1)
+    return torch.cuda.LongTensor(indexes, device=device).view(-1, 1)
 
 
 def tensorsFromPair(pair):
@@ -234,7 +234,7 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
             input_tensor[ei], encoder_hidden)
         encoder_outputs[ei] = encoder_output[0, 0]
 
-    decoder_input = torch.LongTensor([[SOS_token]], device=device)
+    decoder_input = torch.cuda.LongTensor([[SOS_token]], device=device)
 
     decoder_hidden = encoder_hidden
 
@@ -340,7 +340,7 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
                                                      encoder_hidden)
             encoder_outputs[ei] += encoder_output[0, 0]
 
-        decoder_input = torch.LongTensor([[SOS_token]], device=device)  # SOS
+        decoder_input = torch.cuda.LongTensor([[SOS_token]], device=device)  # SOS
 
         decoder_hidden = encoder_hidden
 

@@ -6,6 +6,10 @@
 __pycache__
 
 
+search.py
+.ipynb_checkpoints
+*.ipynb
+
 
 
 
